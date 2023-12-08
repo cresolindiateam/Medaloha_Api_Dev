@@ -4,7 +4,7 @@ const cors = require('cors');
 
 // Enable CORS for specific origins
 const corsOptions = {
-  origin: 'https://medaloha.cresol.in',
+  origin: 'https://devmedaloha.cresol.in',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 };
 

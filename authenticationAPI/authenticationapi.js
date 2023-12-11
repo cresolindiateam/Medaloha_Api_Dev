@@ -1156,13 +1156,15 @@ router.post('/SpecialistRegistraion', async function (req, res) {
               html: 'Please click on this link for confirmation your account '+'<a href="'+link+'" > Confirm your account</a>'
             };
 
-        var data2=    transporter.sendMail(mailOptions, function(error, info){
+        transporter.sendMail(mailOptions, function(error, info){
               if (error) {
                   alert(error);
                 console.log(error);
+                 res.end(JSON.stringify(error)); 
               } else {
                   alert('email sent');
-                console.log('Email sent: ' + info.response); 
+                console.log('Email sent: ' + info.response);
+                 res.end(JSON.stringify(info.response));  
               }
 
             }); 

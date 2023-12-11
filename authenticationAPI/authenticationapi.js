@@ -1156,7 +1156,7 @@ router.post('/SpecialistRegistraion', async function (req, res) {
               html: 'Please click on this link for confirmation your account '+'<a href="'+link+'" > Confirm your account</a>'
             };
 
-            transporter.sendMail(mailOptions, function(error, info){
+        var data2=    transporter.sendMail(mailOptions, function(error, info){
               if (error) {
                   alert(error);
                 console.log(error);
@@ -1185,7 +1185,7 @@ router.post('/SpecialistRegistraion', async function (req, res) {
 
            //   var  logStatus=1;
            // globalVar.data.dbLogs(req,data,logStatus,apiName,res); // DB Logs function 
-            res.end(JSON.stringify(data));    
+            res.end(JSON.stringify(data2));    
           });  
            // res.end(JSON.stringify(req.body)); 
     } else{ 

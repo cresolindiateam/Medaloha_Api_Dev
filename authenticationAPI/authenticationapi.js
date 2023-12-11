@@ -1145,7 +1145,7 @@ router.post('/SpecialistRegistraion', async function (req, res) {
               secure: false,
               auth: {
                 user: 'cresoluser@gmail.com', // here use your real email
-                pass: 'xekgfbgazsnreukt' // put your password correctly (not in this question please) // put your password correctly (not in this question please)
+                pass: 'cresoluser@#$!' // put your password correctly (not in this question please) // put your password correctly (not in this question please)
               }
             }); 
 

@@ -1136,7 +1136,7 @@ router.post('/SpecialistRegistraion', async function (req, res) {
              console.log(link);
             var data = {
                 Status: true, 
-                Message: 'Registration Done2',
+                Message: 'Registration Done2123',
                 SpecialistId:user_id
             }; 
 

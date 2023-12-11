@@ -1179,15 +1179,17 @@ router.post('/SpecialistRegistraion', async function (req, res) {
               transporter.sendMail(mailOptions, function(error, info){
                 if (error) {
                   console.log(error); 
+                  res.end(JSON.stringify(error));
                 } else {
                   console.log('Email sent: ' + info.response); 
+                  res.end(JSON.stringify(info.response)); 
                 } 
               }); 
              }
 
            //   var  logStatus=1;
            // globalVar.data.dbLogs(req,data,logStatus,apiName,res); // DB Logs function 
-            res.end(JSON.stringify(data2));    
+            res.end(JSON.stringify(data));    
           });  
            // res.end(JSON.stringify(req.body)); 
     } else{ 

@@ -357,13 +357,13 @@ router.get('/SpecilistBookingconfirmation', async function (req, res) {
         //   service: 'gmail',
         //   secure: false,
         //   auth: {
-        //     user: 'cresoluser@gmail.com', // here use your real email
+        //     user: 'queztesting@gmail.com', // here use your real email
         //     pass: 'xekgfbgazsnreukt' // put your password correctly (not in this question please) // put your password correctly (not in this question please)
         //   }
         // }); 
 
         // var mailOptions = {
-        //   from: 'cresoluser@gmail.com',
+        //   from: 'queztesting@gmail.com',
         //   to: SpecialistEmail,
         //   subject: 'Medaloha :Booking Confirmed ',
         //   html: 'Your request booking Done.'
@@ -380,7 +380,7 @@ router.get('/SpecilistBookingconfirmation', async function (req, res) {
 
         const msg = {
   to: email,
-  from: 'cresoluser@gmail.com',
+  from: 'queztesting@gmail.com',
   subject: 'Medaloha :Booking Confirmed',
   html: `Your request booking Done.`,
 };
@@ -904,13 +904,13 @@ router.post('/ClientRegistraion', async function (req, res) {
        // var transporter = nodemailer.createTransport({
        //   service: 'gmail',
        //   auth: {
-       //    user: 'cresoluser@gmail.com', // here use your real email
+       //    user: 'queztesting@gmail.com', // here use your real email
        //    pass: 'xekgfbgazsnreukt' // put your password correctly (not in this question please)
        //   }
        // });
  
        // var mailOptions = {
-       //   from: 'cresoluser@gmail.com',
+       //   from: 'queztesting@gmail.com',
        //   to: email,
        //   subject: 'Welcome to Medaloha :Confirmation links ',
        //   html: 'Please click on this link for confirmation your account   '+'<a href="'+link+'" > Confirm your account</a>'
@@ -929,7 +929,7 @@ router.post('/ClientRegistraion', async function (req, res) {
 
          const msg = {
   to: email,
-  from: 'cresoluser@gmail.com',
+  from: 'queztesting@gmail.com',
   subject: 'Welcome to Medaloha :Confirmation links',
   html: 'Please click on this link for confirmation your account   '+'<a href="'+link+'" > Confirm your account</a>',
 };
@@ -947,7 +947,7 @@ sgMail.send(msg)
 
        if(newsletter){
       //   var mailOptions = {
-      //     from: 'cresoluser@gmail.com',
+      //     from: 'queztesting@gmail.com',
       //     to: email,
       //     subject: 'Medaloha :Subscription to newsletter',
       //     html: 'Dear User, Thanks for Subscription'
@@ -964,7 +964,7 @@ sgMail.send(msg)
       //   }); 
              const msg = {
   to: email,
-  from: 'cresoluser@gmail.com',
+  from: 'queztesting@gmail.com',
   subject: 'Medaloha :Subscription to newsletter',
   html: 'Dear User, Thanks for Subscription',
 };
@@ -1204,7 +1204,7 @@ router.post('/SpecialistRegistraion', async function (req, res) {
 // Create SendGrid mail options
 const msg = {
   to: email,
-  from: 'cresoluser@gmail.com',
+  from: 'queztesting@gmail.com',
   subject: 'Welcome to Medaloha: Confirmation Link',
   html: `Please click on this link to confirm your account: <a href="${link}">Confirm your account</a>`,
 };
@@ -1225,13 +1225,13 @@ sgMail.send(msg)
         //       service: 'gmail',
         //       secure: false,
         //       auth: {
-        //         user: 'cresoluser@gmail.com', // here use your real email
+        //         user: 'queztesting@gmail.com', // here use your real email
         //         pass: 'cresoluser@#$!' // put your password correctly (not in this question please) // put your password correctly (not in this question please)
         //       }
         //     }); 
 
         //     var mailOptions = {
-        //       from: 'cresoluser@gmail.com',
+        //       from: 'queztesting@gmail.com',
         //       to: email,
         //       subject: 'Welcome to Medaloha :Confirmation links ',
         //       html: 'Please click on this link for confirmation your account '+'<a href="'+link+'" > Confirm your account</a>'
@@ -1252,7 +1252,7 @@ sgMail.send(msg)
 
             if(newsletter){
               // var mailOptions = {
-              //   from: 'cresoluser@gmail.com',
+              //   from: 'queztesting@gmail.com',
               //   to: email,
               //   subject: 'Medaloha :Subscription to newsletter',
               //   html: 'Dear Specialist, Thanks for Subscription'
@@ -1268,7 +1268,7 @@ sgMail.send(msg)
               // }); 
               const msg = {
   to: email,
-  from: 'cresoluser@gmail.com',
+  from: 'queztesting@gmail.com',
   subject: 'Medaloha :Subscription to newsletter',
   html: `Dear Specialist, Thanks for Subscription`,
 };

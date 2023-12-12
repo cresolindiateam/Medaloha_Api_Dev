@@ -20,8 +20,31 @@ sgMail.setApiKey('SG.owFAjrJYRoihJjaBsZImIg.1G-ZJJTYgD_u4zHB5IeH_o-nMSgCHNxW90jk
 // }); 
 
  router.get('/test', async function (req, res) { 
-  var data = [{"id":1,"name":"India"},{"id":2,"name":"Switzerland"}];
+
+      const msg = {
+  to: email,
+  from: 'queztesting@gmail.com',
+  subject: 'Welcome to Medaloha :Confirmation links',
+  html: 'Please click on this link for confirmation your account   '+'<a href="'+link+'" > Confirm your account</a>',
+};
+
+// Send the email
+sgMail.send(msg)
+  .then(() => {
+   
+     var data = [{"response":"email sent"}];
       res.end(JSON.stringify(data)); 
+    // res.end(JSON.stringify({ message: 'Email sent successfully' }));
+  })
+  .catch((error) => {
+    console.error(error.toString());
+     var data = [{"response":error.toString()}];
+      res.end(JSON.stringify(data)); 
+    // res.end(JSON.stringify({ error: error.toString() }));
+  });
+
+  // var data = [{"id":1,"name":"India"},{"id":2,"name":"Switzerland"}];
+  //     res.end(JSON.stringify(data)); 
       }); 
 
 

@@ -402,7 +402,7 @@ router.get('/SpecilistBookingconfirmation', async function (req, res) {
         // }); 
 
         const msg = {
-  to: email,
+  to: SpecialistEmail,
   from: 'queztesting@gmail.com',
   subject: 'Medaloha :Booking Confirmed',
   html: `Your request booking Done.`,

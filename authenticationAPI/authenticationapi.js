@@ -8,6 +8,8 @@ var axios = require('axios');
 require('dotenv').config();
 var globalVar = require('../global/global.js');
 const cors = require('cors'); // db connection file
+   const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey('YOUR_SENDGRID_API_KEY');
 
 // router.get('/GetAllCountry', async function (req, res) { 
 //      var  apiName  = 'GetAllCountry';  
@@ -351,30 +353,51 @@ router.get('/SpecilistBookingconfirmation', async function (req, res) {
 
           var SpecialistEmail = globalVar.data.GetSpecialistEmailfromBookingByMD5(bookingID);
         
-          var transporter = nodemailer.createTransport({
-          service: 'gmail',
-          secure: false,
-          auth: {
-            user: 'cresoluser@gmail.com', // here use your real email
-            pass: 'xekgfbgazsnreukt' // put your password correctly (not in this question please) // put your password correctly (not in this question please)
-          }
-        }); 
+        //   var transporter = nodemailer.createTransport({
+        //   service: 'gmail',
+        //   secure: false,
+        //   auth: {
+        //     user: 'cresoluser@gmail.com', // here use your real email
+        //     pass: 'xekgfbgazsnreukt' // put your password correctly (not in this question please) // put your password correctly (not in this question please)
+        //   }
+        // }); 
 
-        var mailOptions = {
-          from: 'cresoluser@gmail.com',
-          to: SpecialistEmail,
-          subject: 'Medaloha :Booking Confirmed ',
-          html: 'Your request booking Done.'
-        };
+        // var mailOptions = {
+        //   from: 'cresoluser@gmail.com',
+        //   to: SpecialistEmail,
+        //   subject: 'Medaloha :Booking Confirmed ',
+        //   html: 'Your request booking Done.'
+        // };
 
-        transporter.sendMail(mailOptions, function(error, info){
-          if (error) {
-            console.log(error);
-          } else {
-            console.log('Email sent: ' + info.response); 
-          }
+        // transporter.sendMail(mailOptions, function(error, info){
+        //   if (error) {
+        //     console.log(error);
+        //   } else {
+        //     console.log('Email sent: ' + info.response); 
+        //   }
 
-        }); 
+        // }); 
+
+        const msg = {
+  to: email,
+  from: 'cresoluser@gmail.com',
+  subject: 'Medaloha :Booking Confirmed',
+  html: `Your request booking Done.`,
+};
+
+// Send the email
+sgMail.send(msg)
+  .then(() => {
+    console.log('Email sent: ');
+    // res.end(JSON.stringify({ message: 'Email sent successfully' }));
+  })
+  .catch((error) => {
+    console.error(error.toString());
+    // res.end(JSON.stringify({ error: error.toString() }));
+  });
+
+
+
         
          var data = {
           Status: true, 
@@ -878,49 +901,85 @@ router.post('/ClientRegistraion', async function (req, res) {
            MemberId:user_id,
        }; 
 
-       var transporter = nodemailer.createTransport({
-         service: 'gmail',
-         auth: {
-          user: 'cresoluser@gmail.com', // here use your real email
-          pass: 'xekgfbgazsnreukt' // put your password correctly (not in this question please)
-         }
-       });
+       // var transporter = nodemailer.createTransport({
+       //   service: 'gmail',
+       //   auth: {
+       //    user: 'cresoluser@gmail.com', // here use your real email
+       //    pass: 'xekgfbgazsnreukt' // put your password correctly (not in this question please)
+       //   }
+       // });
  
-       var mailOptions = {
-         from: 'cresoluser@gmail.com',
-         to: email,
-         subject: 'Welcome to Medaloha :Confirmation links ',
-         html: 'Please click on this link for confirmation your account   '+'<a href="'+link+'" > Confirm your account</a>'
-       }; 
-       transporter.sendMail(mailOptions, function(error, info){
+       // var mailOptions = {
+       //   from: 'cresoluser@gmail.com',
+       //   to: email,
+       //   subject: 'Welcome to Medaloha :Confirmation links ',
+       //   html: 'Please click on this link for confirmation your account   '+'<a href="'+link+'" > Confirm your account</a>'
+       // }; 
+       // transporter.sendMail(mailOptions, function(error, info){
            
-          if (error) {
-            console.log(error);
+       //    if (error) {
+       //      console.log(error);
             
-          } else {
-            console.log('Email sent: ' + info.response); 
+       //    } else {
+       //      console.log('Email sent: ' + info.response); 
           
             
-          } 
-       }); 
+       //    } 
+       // }); 
+
+         const msg = {
+  to: email,
+  from: 'cresoluser@gmail.com',
+  subject: 'Welcome to Medaloha :Confirmation links',
+  html: 'Please click on this link for confirmation your account   '+'<a href="'+link+'" > Confirm your account</a>',
+};
+
+// Send the email
+sgMail.send(msg)
+  .then(() => {
+    console.log('Email sent: ');
+    // res.end(JSON.stringify({ message: 'Email sent successfully' }));
+  })
+  .catch((error) => {
+    console.error(error.toString());
+    // res.end(JSON.stringify({ error: error.toString() }));
+  });
 
        if(newsletter){
-        var mailOptions = {
-          from: 'cresoluser@gmail.com',
-          to: email,
-          subject: 'Medaloha :Subscription to newsletter',
-          html: 'Dear User, Thanks for Subscription'
-        }; 
-      transporter.sendMail(mailOptions, function(error, info){
-          if (error) {
-            console.log(error);
+      //   var mailOptions = {
+      //     from: 'cresoluser@gmail.com',
+      //     to: email,
+      //     subject: 'Medaloha :Subscription to newsletter',
+      //     html: 'Dear User, Thanks for Subscription'
+      //   }; 
+      // transporter.sendMail(mailOptions, function(error, info){
+      //     if (error) {
+      //       console.log(error);
            
-          } else {
-            console.log('Email sent: ' + info.response); 
+      //     } else {
+      //       console.log('Email sent: ' + info.response); 
            
             
-          } 
-        }); 
+      //     } 
+      //   }); 
+             const msg = {
+  to: email,
+  from: 'cresoluser@gmail.com',
+  subject: 'Medaloha :Subscription to newsletter',
+  html: 'Dear User, Thanks for Subscription',
+};
+
+// Send the email
+sgMail.send(msg)
+  .then(() => {
+    console.log('Email sent: ');
+    // res.end(JSON.stringify({ message: 'Email sent successfully' }));
+  })
+  .catch((error) => {
+    console.error(error.toString());
+    // res.end(JSON.stringify({ error: error.toString() }));
+  });
+
        }
   
  
@@ -1140,51 +1199,91 @@ router.post('/SpecialistRegistraion', async function (req, res) {
                 SpecialistId:user_id
             }; 
 
-            var transporter = nodemailer.createTransport({
-              service: 'gmail',
-              secure: false,
-              auth: {
-                user: 'cresoluser@gmail.com', // here use your real email
-                pass: 'cresoluser@#$!' // put your password correctly (not in this question please) // put your password correctly (not in this question please)
-              }
-            }); 
 
-            var mailOptions = {
-              from: 'cresoluser@gmail.com',
-              to: email,
-              subject: 'Welcome to Medaloha :Confirmation links ',
-              html: 'Please click on this link for confirmation your account '+'<a href="'+link+'" > Confirm your account</a>'
-            };
 
-        transporter.sendMail(mailOptions, function(error, info){
-              if (error) {
-                  alert(error);
-                console.log(error);
-                 res.end(JSON.stringify(error)); 
-              } else {
-                  alert('email sent');
-                console.log('Email sent: ' + info.response);
-                 res.end(JSON.stringify(info.response));  
-              }
+// Create SendGrid mail options
+const msg = {
+  to: email,
+  from: 'cresoluser@gmail.com',
+  subject: 'Welcome to Medaloha: Confirmation Link',
+  html: `Please click on this link to confirm your account: <a href="${link}">Confirm your account</a>`,
+};
 
-            }); 
+// Send the email
+sgMail.send(msg)
+  .then(() => {
+    console.log('Email sent successfully');
+    // res.end(JSON.stringify({ message: 'Email sent successfully' }));
+  })
+  .catch((error) => {
+    console.error(error.toString());
+    // res.end(JSON.stringify({ error: error.toString() }));
+  });
+
+
+        //     var transporter = nodemailer.createTransport({
+        //       service: 'gmail',
+        //       secure: false,
+        //       auth: {
+        //         user: 'cresoluser@gmail.com', // here use your real email
+        //         pass: 'cresoluser@#$!' // put your password correctly (not in this question please) // put your password correctly (not in this question please)
+        //       }
+        //     }); 
+
+        //     var mailOptions = {
+        //       from: 'cresoluser@gmail.com',
+        //       to: email,
+        //       subject: 'Welcome to Medaloha :Confirmation links ',
+        //       html: 'Please click on this link for confirmation your account '+'<a href="'+link+'" > Confirm your account</a>'
+        //     };
+
+        // transporter.sendMail(mailOptions, function(error, info){
+        //       if (error) {
+        //           alert(error);
+        //         console.log(error);
+        //          res.end(JSON.stringify(error)); 
+        //       } else {
+        //           alert('email sent');
+        //         console.log('Email sent: ' + info.response);
+        //          res.end(JSON.stringify(info.response));  
+        //       }
+
+        //     }); 
 
             if(newsletter){
-              var mailOptions = {
-                from: 'cresoluser@gmail.com',
-                to: email,
-                subject: 'Medaloha :Subscription to newsletter',
-                html: 'Dear Specialist, Thanks for Subscription'
-              }; 
-              transporter.sendMail(mailOptions, function(error, info){
-                if (error) {
-                  console.log(error); 
-                  res.end(JSON.stringify(error));
-                } else {
-                  console.log('Email sent: ' + info.response); 
-                  res.end(JSON.stringify(info.response)); 
-                } 
-              }); 
+              // var mailOptions = {
+              //   from: 'cresoluser@gmail.com',
+              //   to: email,
+              //   subject: 'Medaloha :Subscription to newsletter',
+              //   html: 'Dear Specialist, Thanks for Subscription'
+              // }; 
+              // transporter.sendMail(mailOptions, function(error, info){
+              //   if (error) {
+              //     console.log(error); 
+              //     res.end(JSON.stringify(error));
+              //   } else {
+              //     console.log('Email sent: ' + info.response); 
+              //     res.end(JSON.stringify(info.response)); 
+              //   } 
+              // }); 
+              const msg = {
+  to: email,
+  from: 'cresoluser@gmail.com',
+  subject: 'Medaloha :Subscription to newsletter',
+  html: `Dear Specialist, Thanks for Subscription`,
+};
+
+// Send the email
+sgMail.send(msg)
+  .then(() => {
+    console.log('Email sent successfully');
+    // res.end(JSON.stringify({ message: 'Email sent successfully' }));
+  })
+  .catch((error) => {
+    console.error(error.toString());
+    // res.end(JSON.stringify({ error: error.toString() }));
+  });
+
              }
 
            //   var  logStatus=1;

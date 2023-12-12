@@ -25,7 +25,7 @@ sgMail.setApiKey('SG.owFAjrJYRoihJjaBsZImIg.1G-ZJJTYgD_u4zHB5IeH_o-nMSgCHNxW90jk
   to: "cresoluser@gmail.com",
   from: 'queztesting@gmail.com',
   subject: 'Welcome to Medaloha :Confirmation links',
-  html: 'Please click on this link for confirmation your account   '+'<a href="'+link+'" > Confirm your account</a>',
+  html: 'Please click on this link for confirmation your account   Confirm your account</a>',
 };
 
 // Send the email

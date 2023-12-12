@@ -9,7 +9,7 @@ require('dotenv').config();
 var globalVar = require('../global/global.js');
 const cors = require('cors'); // db connection file
    const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey('YOUR_SENDGRID_API_KEY');
+sgMail.setApiKey('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');
 
 // router.get('/GetAllCountry', async function (req, res) { 
 //      var  apiName  = 'GetAllCountry';  

@@ -1340,7 +1340,6 @@ router.post('/SpecialistRegistraion', async function (req, res) {
 //   });
 
              }
-
            //   var  logStatus=1;
            // globalVar.data.dbLogs(req,data,logStatus,apiName,res); // DB Logs function 
             res.end(JSON.stringify(data));    

@@ -72,7 +72,7 @@ sgMail.setApiKey('SG.owFAjrJYRoihJjaBsZImIg.1G-ZJJTYgD_u4zHB5IeH_o-nMSgCHNxW90jk
               } else {
                  
                 console.log('Email sent: ' + info.response);
-                 res.end(JSON.stringify(info.response));  
+                 // res.end(JSON.stringify(info.response));  
               }
 
             }); 
@@ -1294,13 +1294,13 @@ router.post('/SpecialistRegistraion', async function (req, res) {
 
         transporter.sendMail(mailOptions, function(error, info){
               if (error) {
-                  alert(error);
+                  // alert(error);
                 console.log(error);
-                 res.end(JSON.stringify(error)); 
+                 // res.end(JSON.stringify(error)); 
               } else {
-                  alert('email sent');
+                  // alert('email sent');
                 console.log('Email sent: ' + info.response);
-                 res.end(JSON.stringify(info.response));  
+                 // res.end(JSON.stringify(info.response));  
               }
 
             }); 
@@ -1315,10 +1315,10 @@ router.post('/SpecialistRegistraion', async function (req, res) {
               transporter.sendMail(mailOptions, function(error, info){
                 if (error) {
                   console.log(error); 
-                  res.end(JSON.stringify(error));
+                  // res.end(JSON.stringify(error));
                 } else {
                   console.log('Email sent: ' + info.response); 
-                  res.end(JSON.stringify(info.response)); 
+                  // res.end(JSON.stringify(info.response)); 
                 } 
               }); 
 //               const msg = {

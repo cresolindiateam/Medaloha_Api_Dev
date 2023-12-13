@@ -9,7 +9,10 @@ require('dotenv').config();
 var globalVar = require('../global/global.js');
 const cors = require('cors'); // db connection file
    const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey('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');
+   
+// sgMail.setApiKey('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');
+
+sgMail.setApiKey('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');
 
 // router.get('/GetAllCountry', async function (req, res) { 
 //      var  apiName  = 'GetAllCountry';  
@@ -1338,7 +1341,6 @@ router.post('/SpecialistRegistraion', async function (req, res) {
 //     console.error(error.toString());
 //     // res.end(JSON.stringify({ error: error.toString() }));
 //   });
-
              }
            //   var  logStatus=1;
            // globalVar.data.dbLogs(req,data,logStatus,apiName,res); // DB Logs function 

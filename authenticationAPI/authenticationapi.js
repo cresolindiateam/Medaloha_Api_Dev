@@ -1208,7 +1208,7 @@ router.post('/SpecialistRegistraion', async function (req, res) {
        console.log(err2); 
       var data = {
           Status: false, 
-          Message: 'Something wroing in query.',
+          Message: 'Something wrong in query.',
           Error:err2
       }; 
        //var logStatus = 0;
@@ -1250,7 +1250,7 @@ router.post('/SpecialistRegistraion', async function (req, res) {
              console.log(link);
             var data = {
                 Status: true, 
-                Message: 'Registration Done2123',
+                Message: 'Registration Done',
                 SpecialistId:user_id
             }; 
 
@@ -1294,13 +1294,13 @@ router.post('/SpecialistRegistraion', async function (req, res) {
 
         transporter.sendMail(mailOptions, function(error, info){
               if (error) {
-                  // alert(error);
+                 
                 console.log(error);
-                 // res.end(JSON.stringify(error)); 
+                
               } else {
-                  // alert('email sent');
+                
                 console.log('Email sent: ' + info.response);
-                 // res.end(JSON.stringify(info.response));  
+                 
               }
 
             }); 
@@ -1343,7 +1343,7 @@ router.post('/SpecialistRegistraion', async function (req, res) {
 
            //   var  logStatus=1;
            // globalVar.data.dbLogs(req,data,logStatus,apiName,res); // DB Logs function 
-            res.end(JSON.stringify(transporter));    
+            res.end(JSON.stringify(data));    
           });  
            // res.end(JSON.stringify(req.body)); 
     } else{ 

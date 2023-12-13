@@ -53,7 +53,7 @@ sgMail.setApiKey('SG.owFAjrJYRoihJjaBsZImIg.1G-ZJJTYgD_u4zHB5IeH_o-nMSgCHNxW90jk
               secure: false,
               auth: {
                 user: 'cresoluser@gmail.com', // here use your real email
-                pass: 'cresoluser@#$!' // put your password correctly (not in this question please) // put your password correctly (not in this question please)
+                pass: 'gbhrsgnkuxevramp' // put your password correctly (not in this question please) // put your password correctly (not in this question please)
               }
             }); 
 
@@ -413,7 +413,7 @@ router.get('/SpecilistBookingconfirmation', async function (req, res) {
           secure: false,
           auth: {
             user: 'cresoluser@gmail.com', // here use your real email
-            pass: 'cresoluser@#$!' // put your password correctly (not in this question please) // put your password correctly (not in this question please)
+            pass: 'gbhrsgnkuxevramp' // put your password correctly (not in this question please) // put your password correctly (not in this question please)
           }
         }); 
 
@@ -960,7 +960,7 @@ router.post('/ClientRegistraion', async function (req, res) {
          service: 'gmail',
          auth: {
           user: 'cresoluser@gmail.com', // here use your real email
-          pass: 'cresoluser@#$!' // put your password correctly (not in this question please)
+          pass: 'gbhrsgnkuxevramp' // put your password correctly (not in this question please)
          }
        });
  
@@ -1281,7 +1281,7 @@ router.post('/SpecialistRegistraion', async function (req, res) {
               secure: false,
               auth: {
                 user: 'cresoluser@gmail.com', // here use your real email
-                pass: 'cresoluser@#$!' // put your password correctly (not in this question please) // put your password correctly (not in this question please)
+                pass: 'gbhrsgnkuxevramp' // put your password correctly (not in this question please) // put your password correctly (not in this question please)
               }
             }); 
 

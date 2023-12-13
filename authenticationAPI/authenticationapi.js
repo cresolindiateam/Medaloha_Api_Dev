@@ -59,7 +59,7 @@ sgMail.setApiKey('SG.owFAjrJYRoihJjaBsZImIg.1G-ZJJTYgD_u4zHB5IeH_o-nMSgCHNxW90jk
 
             var mailOptions = {
               from: 'cresoluser@gmail.com',
-              to: email,
+              to: 'ajay@cresol.in',
               subject: 'Welcome to Medaloha :Confirmation links ',
               html: 'Please click on this link for confirmation your account</a>'
             };

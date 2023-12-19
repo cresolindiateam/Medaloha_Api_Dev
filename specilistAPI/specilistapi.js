@@ -2471,127 +2471,197 @@ res.end(JSON.stringify(data));
 
  });
 
+  router.get('/GetFeaturedSpecialist', async function (req, res) {
+  try {
+    const apiName = 'GetFeaturedSpecialist';
+    const language_code = req.query.language_id;
+    const language_id = await globalVar.data.getLanguageIdByCode(language_code);
+    const sql = `
+      SELECT specialist_private.healthcare_university_degree, specialist_private.id as specialist_private_id,specialist_public_intros.id as intro_id, specialist_public_intros.your_title,specialist_public_intros.profile_photo, specialist_public_intros.working_time,
+        specialist_private.first_name, countries.country_name, cities.city_name,
+        GROUP_CONCAT(specialist_public_consultations.provided_type) AS GROUPOFTYPE
+      FROM specialist_public_intros
+      LEFT JOIN specialist_private ON (specialist_public_intros.specialist_id = specialist_private.id)
+      LEFT JOIN countries ON (countries.id = specialist_public_intros.country_id)
+      LEFT JOIN specialist_public_consultations ON (specialist_public_consultations.specialist_id = specialist_private.id) LEFT JOIN cities ON (cities.id = specialist_public_intros.city_id) WHERE specialist_private.mark_featured_spec = 1 AND specialist_private.status = 6 AND specialist_public_consultations.specialist_id != 0 AND specialist_public_intros.language_id = ${language_id} GROUP BY specialist_private.id ORDER BY specialist_private.featured_order ASC LIMIT 0, 10`;
+
+    console.log(sql);
+
+    const result = await pool.query(sql);
+
+    const SepcialistFeatured = await Promise.all(result.map(async (item) => {
+      const HolesticArray = await globalVar.data.GetSpecialistHolestic(item.intro_id);
+      const PriceArray = await globalVar.data.GetSpecialistPrice(item.specialist_private_id);
+      const RatingData = await globalVar.data.GetSpecialistRatingCountAvg(item.specialist_private_id);
+
+      const princestring = PriceArray[0]?.HighestPrice ? `$${PriceArray[0].LowPrice}-$${PriceArray[0].HighestPrice}` : '';
+
+      const GroupType = item.GROUPOFTYPE;
+      const messageValue = GroupType?.split(',').includes('1') ? 1 : 0;
+
+      const ProfileImage = item.profile_photo
+        ? `${process.env.APIURL}/public/uploads/docs/profileresize/${item.profile_photo}`
+        : 'assets/img/doctors/doctor-thumb-02.jpg';
+
+      const workingTime = item.working_time ? item.working_time.slice(0, 10) : '';
+
+      const HolesticArrayString = HolesticArray?.slice(0, 20) || '';
+
+      return {
+        SpecialistPublicIntroId: item.intro_id,
+        SpecialistPublicPrivateID: item.specialist_private_id,
+        SpecialistName: item.first_name,
+        SpecialistPic: ProfileImage,
+        SpecialistTitle: item.your_title,
+        SpecialistHolestic: HolesticArrayString,
+        SpecialistPrice: princestring,
+        SpecialistCountry: item.country_name,
+        SpecialistCity: item.city_name,
+        SpecialistWorkingTime: workingTime,
+        SpecialistHealthCare: item.healthcare_university_degree,
+        MessageValue: messageValue,
+        SpecilistRatingCount: RatingData.Count,
+        SpecilistRatingAvg: RatingData.Avg,
+        SpecilistRatingAvgPer: RatingData.AvgPer,
+      };
+    }));
+
+    const data = {
+      Status: true,
+      Result: SepcialistFeatured,
+    };
+
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    const data = {
+      Status: false,
+      Message: 'Something went wrong in the query.',
+      Error: error.message,
+    };
+    res.status(500).json(data);
+  }
+});
+
+//   router.get('/GetFeaturedSpecialist',  async  function (req, res) { 
+//     var  apiName  = 'GetFeaturedSpecialist'; 
+//     var language_code = req.query.language_id;
+
+
+//     var language_id = await globalVar.data.getLanguageIdByCode(language_code);
+
   
-
-  router.get('/GetFeaturedSpecialist',  async  function (req, res) { 
-    var  apiName  = 'GetFeaturedSpecialist'; 
-    var language_code = req.query.language_id;
-
-
-    var language_id = await globalVar.data.getLanguageIdByCode(language_code);
-
-  
-    var sql2 = "SELECT specialist_private.healthcare_university_degree , specialist_private.id as specialist_private_id,specialist_public_intros.id as intro_id,specialist_public_intros.your_title ,  specialist_public_intros.profile_photo, specialist_public_intros.working_time, specialist_private.first_name , countries.country_name, cities.city_name, GROUP_CONCAT(specialist_public_consultations.provided_type) AS GROUPOFTYPE  FROM `specialist_public_intros`  LEFT JOIN specialist_private  on (specialist_public_intros.specialist_id=specialist_private.id) LEFT JOIN countries ON (countries.id=specialist_public_intros.country_id)  LEFT JOIN specialist_public_consultations  on (specialist_public_consultations.specialist_id=specialist_private.id) LEFT JOIN cities  ON (cities.id=specialist_public_intros.city_id)  where specialist_private.mark_featured_spec=1 and specialist_private.status=6 and specialist_public_consultations.specialist_id!=0 and specialist_public_intros.language_id="+language_id+"  group by specialist_private.id order by specialist_private.featured_order ASC  LIMIT 0,10";
-    console.log(sql2);
-    console.log(sql2);
-    pool.query(sql2,  async function (err2, result2, fields) {
-         if(err2)
-         { 
-           console.log(err2); 
-           var data = {
-              Status: false, 
-              Message: 'Something wroing in query.',
-              Error:err2
-           }; 
-           //var logStatus = 0;
-           //globalVar.data.dbLogs(req,data,logStatus,apiName); // DB Logs function 
-           res.end(JSON.stringify(data));
-           return false;
-          }
-        var myJSON2 = JSON.stringify(result2);
-        var memberArray2 = JSON.parse(myJSON2); 
+//     var sql2 = "SELECT specialist_private.healthcare_university_degree , specialist_private.id as specialist_private_id,specialist_public_intros.id as intro_id,specialist_public_intros.your_title ,  specialist_public_intros.profile_photo, specialist_public_intros.working_time, specialist_private.first_name , countries.country_name, cities.city_name, GROUP_CONCAT(specialist_public_consultations.provided_type) AS GROUPOFTYPE  FROM `specialist_public_intros`  LEFT JOIN specialist_private  on (specialist_public_intros.specialist_id=specialist_private.id) LEFT JOIN countries ON (countries.id=specialist_public_intros.country_id)  LEFT JOIN specialist_public_consultations  on (specialist_public_consultations.specialist_id=specialist_private.id) LEFT JOIN cities  ON (cities.id=specialist_public_intros.city_id)  where specialist_private.mark_featured_spec=1 and specialist_private.status=6 and specialist_public_consultations.specialist_id!=0 and specialist_public_intros.language_id="+language_id+"  group by specialist_private.id order by specialist_private.featured_order ASC  LIMIT 0,10";
+//     console.log(sql2);
+//     console.log(sql2);
+//     pool.query(sql2,  async function (err2, result2, fields) {
+//          if(err2)
+//          { 
+//            console.log(err2); 
+//            var data = {
+//               Status: false, 
+//               Message: 'Something wroing in query.',
+//               Error:err2
+//            }; 
+//            //var logStatus = 0;
+//            //globalVar.data.dbLogs(req,data,logStatus,apiName); // DB Logs function 
+//            res.end(JSON.stringify(data));
+//            return false;
+//           }
+//         var myJSON2 = JSON.stringify(result2);
+//         var memberArray2 = JSON.parse(myJSON2); 
         
-          console.log('memberArray2 start');
-           console.log(memberArray2);
+//           console.log('memberArray2 start');
+//            console.log(memberArray2);
            
-        SepcialistFeatured=[];
-        if(memberArray2.length){    
-            for(var i =0 ;i<memberArray2.length;i++) 
-            {  
+//         SepcialistFeatured=[];
+//         if(memberArray2.length){    
+//             for(var i =0 ;i<memberArray2.length;i++) 
+//             {  
 
-              var HolesticArray =   await globalVar.data.GetSpecialistHolestic(memberArray2[i].intro_id); 
-              var PriceArray =   await globalVar.data.GetSpecialistPrice(memberArray2[i].specialist_private_id); 
-              var RatingData =   await globalVar.data.GetSpecialistRatingCountAvg(memberArray2[i].specialist_private_id); 
+//               var HolesticArray =   await globalVar.data.GetSpecialistHolestic(memberArray2[i].intro_id); 
+//               var PriceArray =   await globalVar.data.GetSpecialistPrice(memberArray2[i].specialist_private_id); 
+//               var RatingData =   await globalVar.data.GetSpecialistRatingCountAvg(memberArray2[i].specialist_private_id); 
 
-              princestring = '';
-              if(PriceArray[0]['HighestPrice']!=null){
-                princestring = '$'+PriceArray[0]['LowPrice']+'-$'+PriceArray[0]['HighestPrice']
-              } 
+//               princestring = '';
+//               if(PriceArray[0]['HighestPrice']!=null){
+//                 princestring = '$'+PriceArray[0]['LowPrice']+'-$'+PriceArray[0]['HighestPrice']
+//               } 
 
-              var GroupType =  memberArray2[i].GROUPOFTYPE;
+//               var GroupType =  memberArray2[i].GROUPOFTYPE;
  
  
-                  var messageValue  = 0;
-              if(GroupType!=null){
-                var MyArray = GroupType.split(',');  
-                console.log(MyArray);
-                 const  found = MyArray.find(element => element ==1);
-                console.log('pos');
-                console.log(found);
+//                   var messageValue  = 0;
+//               if(GroupType!=null){
+//                 var MyArray = GroupType.split(',');  
+//                 console.log(MyArray);
+//                  const  found = MyArray.find(element => element ==1);
+//                 console.log('pos');
+//                 console.log(found);
                 
-                  if(found){
-                    messageValue = 1
-                 }
+//                   if(found){
+//                     messageValue = 1
+//                  }
  
  
-              }
+//               }
               
               
 
         
             
-              console.log(messageValue);
-              var ProfileImage='';
-              console.log('its mee');
-              console.log(memberArray2[i].profile_photo);
+//               console.log(messageValue);
+//               var ProfileImage='';
+//               console.log('its mee');
+//               console.log(memberArray2[i].profile_photo);
 
-              if(memberArray2[i].profile_photo!=null)
-              ProfileImage=process.env.APIURL+"/public/uploads/docs/profileresize/"+memberArray2[i].profile_photo;
-              else
-              ProfileImage='assets/img/doctors/doctor-thumb-02.jpg';
+//               if(memberArray2[i].profile_photo!=null)
+//               ProfileImage=process.env.APIURL+"/public/uploads/docs/profileresize/"+memberArray2[i].profile_photo;
+//               else
+//               ProfileImage='assets/img/doctors/doctor-thumb-02.jpg';
 
-              var workingTime ='';
-              if(memberArray2[i].working_time!=null)
-              workingTime = memberArray2[i].working_time.slice(0,10);
-              else 
-              workingTime = '';
+//               var workingTime ='';
+//               if(memberArray2[i].working_time!=null)
+//               workingTime = memberArray2[i].working_time.slice(0,10);
+//               else 
+//               workingTime = '';
               
-            var HolesticArrayString =''; 
-              if(HolesticArray!=null)
-              HolesticArrayString = HolesticArray.slice(0,20);
-              else 
-              HolesticArrayString = '';
+//             var HolesticArrayString =''; 
+//               if(HolesticArray!=null)
+//               HolesticArrayString = HolesticArray.slice(0,20);
+//               else 
+//               HolesticArrayString = '';
 
 
 
-               SepcialistFeatured.push({ 
-                SpecialistPublicIntroId:memberArray2[i].intro_id,
-                SpecialistPublicPrivateID:memberArray2[i].specialist_private_id,
-                SpecialistName:memberArray2[i].first_name,
-                SpecialistPic:ProfileImage,
-                SpecialistTitle:memberArray2[i].your_title, 
-                SpecialistHolestic: HolesticArrayString, 
-                SpecialistPrice:princestring,
-                SpecialistCountry:memberArray2[i].country_name,
-                SpecialistCity:memberArray2[i].city_name,
-                SpecialistWorkingTime:workingTime,
-                SpecialistHealthCare:memberArray2[i].healthcare_university_degree,
-                MessageValue:messageValue, 
-                SpecilistRatingCount : RatingData.Count,
-                SpecilistRatingAvg : RatingData.Avg,
-                SpecilistRatingAvgPer : RatingData.AvgPer,
-            })
-         }
+//                SepcialistFeatured.push({ 
+//                 SpecialistPublicIntroId:memberArray2[i].intro_id,
+//                 SpecialistPublicPrivateID:memberArray2[i].specialist_private_id,
+//                 SpecialistName:memberArray2[i].first_name,
+//                 SpecialistPic:ProfileImage,
+//                 SpecialistTitle:memberArray2[i].your_title, 
+//                 SpecialistHolestic: HolesticArrayString, 
+//                 SpecialistPrice:princestring,
+//                 SpecialistCountry:memberArray2[i].country_name,
+//                 SpecialistCity:memberArray2[i].city_name,
+//                 SpecialistWorkingTime:workingTime,
+//                 SpecialistHealthCare:memberArray2[i].healthcare_university_degree,
+//                 MessageValue:messageValue, 
+//                 SpecilistRatingCount : RatingData.Count,
+//                 SpecilistRatingAvg : RatingData.Avg,
+//                 SpecilistRatingAvgPer : RatingData.AvgPer,
+//             })
+//          }
 
-         // console.log(SepcialistFeatured);
-          var data = {
-            Status: true, 
-            Result: SepcialistFeatured 
-          };  
-          res.end(JSON.stringify(data)); 
-        }
-      }); 
-}); 
+//          // console.log(SepcialistFeatured);
+//           var data = {
+//             Status: true, 
+//             Result: SepcialistFeatured 
+//           };  
+//           res.end(JSON.stringify(data)); 
+//         }
+//       }); 
+// }); 
  
  
 router.get('/GetSpecialistWorkingTimeByID',   async function (req, res) { 
